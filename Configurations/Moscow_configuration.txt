@@ -1,0 +1,19 @@
+{
+"input_data":{"project_name": "please input your data",
+                  "lat_ne": "please input your data",
+                  "lon_ne": "please input your data",
+                  "lat_sw": "please input your data",
+                  "lon_sw": "please input your data",
+                  "step": "0.07"},
+"payload": {"client_id": "please input your data",
+               "client_secret": "please input your data",
+               "grant_type": "please input your data",
+               "username": "please input your data",
+               "password": "please input your data",
+               "scope": "read_station"},
+"adr": "https://api.netatmo.com/oauth2/token",
+"adr_getpublicdata": "https://api.netatmo.com/api/getpublicdata",
+"netatmo_folder": "please input your data",
+"station_file_name": "Netatmo_stations.csv",
+"aux_station_file_name": "Netatmo_stations_aux.csv"
+}
