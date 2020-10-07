@@ -1,28 +1,53 @@
-# coding: utf-8
+#----------------------------------------------------------
+# allows loading data from netatmo meteorological stations for the certain territory
+#
+# (C) 2020 Pavel Kargashin, Mikhail Varentsov, Timofey Samsonov, Pavel Konstantinov, Polina Korosteleva, Moscow Russia
+# Released under MIT license
+# email p.e.kargashin@mail.ru, mvar91@gmail.com
+#----------------------------------------------------------
+
+
 import os
-import pandas as pd
-import requests
-import numpy as np
+import sys
 import itertools
 import datetime
-import json
 import time
 import math
-import sys
+
+import requests
+import numpy as np
+import pandas as pd
+import json
 
 
 def logging_process(file2write, message):
+    """Writing messages to a logfile of the project
+    Arguments:
+    file2write -- path to the file with .txt extension. The file will be created
+                  automatically in your working directory. Its name is project_log_year_month.txt
+    message -- str message to write in the file
+    """
     with open(file2write, 'a') as f:
         f.write(message+'\n')
     f.close()
 
 
 def get_token(adress, payload, current_log):
+    """ Requesting and obtaining token to get access to Netatmo data. It is mandatory.
+        The most parameters must be set in the file ...Configurations/project_configuration.txt.
+    Arguments:
+    adress -- http link to get token. The value must be set in the file ...Configurations/project_configuration.txt
+    payload -- The set of essential data to obtain token, which includes your personal registration data in Netatmo.
+               The value must be set in the file ...Configurations/project_configuration.txt
+    current_log --
+    """
     response = requests.post(adress, data=payload)
     if response.status_code == 200:
         return response.json()['access_token'], response.json()['refresh_token']
     else:
-        logging_process(current_log, 'Can not get token. Some problems with server. Response status is not 200')
+        logging_process(
+                        current_log, 'Can not get token. Some problems with server. Response status is not 200'
+        )
         get_token(adress, payload, current_log)  # possible endless loop
         return
 
@@ -66,7 +91,9 @@ def get_data_getpublicdata(adress, params, current_log):
                 iteration += 1
                 time.sleep(1)
                 req_count += 1
-                logging_process(current_log, "Cannot get public data. The error is {}".format(my_data))
+                logging_process(
+                                current_log, "Cannot get public data. The error is {}".format(my_data)
+                )
                 continue
             elif my_data.status_code == 500:
                 iteration += 1
@@ -80,7 +107,9 @@ def get_data_getpublicdata(adress, params, current_log):
                 continue
 
         except:
-            logging_process(current_log, "Cannot get public data. The error is {}".format(my_data))
+            logging_process(
+                            current_log, "Cannot get public data. The error is {}".format(my_data)
+            )
             continue
     result = ['server error']
     return result, req_count
@@ -135,7 +164,9 @@ def update_stations_list(cur_stations_list, arch_stations_file):
         temp_df = arch_df.merge(cur_df, how='outer', on=['station_mac'], suffixes=['_arch', '_cur'], indicator=True)
         new_data = temp_df.query("_merge=='right_only'").copy()
         similar_data = temp_df.query("_merge=='both'").copy()
-        changed_data = similar_data.query("abs(latitude_arch-latitude_cur)>0.00001 or abs(longitude_arch-longitude_cur)>0.00001 or altitude_arch!=altitude_cur").copy()
+        changed_data = similar_data.query("abs(latitude_arch-latitude_cur)>0.00001 or 
+                                           abs(longitude_arch-longitude_cur)>0.00001 or 
+                                           altitude_arch!=altitude_cur").copy()
         data2append = pd.concat([new_data, changed_data]).copy()
         if data2append.shape[0] == 0:
             return "There are no new stations in the search area", 0
@@ -286,10 +317,14 @@ def process_territory(config_file):
         remove_duplicates(current_folder)
     finally:
         logging_process(current_log,"Number of requests is {}".format(str(counter)))
-        logging_process(current_log,
-                        "Total stations (with duplicates) - {}".format(str(count_stations(list_total_stations)[1])))
-        logging_process(current_log, "Total stations (without duplicates) - {}".format(str(count_stations(list_total_stations)[0])))
-        logging_process(current_log, "New stations - {}".format(str(num_new_stations)))
+        logging_process(
+                        current_log,"Total stations (with duplicates) - {}".format(str(count_stations(list_total_stations)[1]))
+        )
+        logging_process(
+                        current_log, "Total stations (without duplicates) - {}".format(str(count_stations(list_total_stations)[0]))
+        )
+        logging_process(
+                        current_log, "New stations - {}".format(str(num_new_stations)))
         logging_process(current_log, 'Script have finished processing!')
         logging_process(current_log, '---------------------\n\n')
     return configs['input_data']['project_name']
@@ -307,8 +342,5 @@ def run_all(config_folder):
 
 
 if __name__ == "__main__":
-
-    
     config_folder = ""  # input the path to folder Configuration
-
     run_all(config_folder)
