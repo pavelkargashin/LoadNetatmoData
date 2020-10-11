@@ -39,7 +39,7 @@ def get_token(adress, payload, current_log):
     adress -- http link to get token. The value must be set in the file ...Configurations/project_configuration.txt
     payload -- The set of essential data to obtain token, which includes your personal registration data in Netatmo.
                The value must be set in the file ...Configurations/project_configuration.txt
-    current_log --
+    current_log -- path to the file with project_log_year_month.txt. The file crates automatically and contains data about loading process 
     """
     response = requests.post(adress, data=payload)
     if response.status_code == 200:
@@ -58,6 +58,22 @@ def make_pairs(start, stop, step):
 
 
 def split_area(lat_ne, lat_sw, lon_ne, lon_sw, token, step):
+    """ Makes numerous small areas for requesting meteodata within the desired area.
+        As a result you get a list which includes dictionaries.
+        Each dictionary has all params to use it further in Netatmo API function getpublicdata.
+        The desired area will be cut into pieces.
+        Step=1 means that the area within lat_ne, lat_sw, lon_ne, lon_sw
+        will be split into 1 degree rectangles.
+        
+        Arguments:
+        lat_ne -- latitude (in degrees) northeast corner of desired area
+        lat_sw -- latitude (in degrees) southwest corner of desired area
+        lon_ne -- longitude (in degrees) northeast corner of desired area
+        lon_sw -- longitude (in degrees) southwest corner of desired area
+        token -- token to access Netatmo data
+        step -- value of each cell to be created. In degrees. 
+    
+    """
     lats = make_pairs(min(lat_ne, lat_sw), max(lat_ne, lat_sw), step)
     lons = make_pairs(min(lon_ne, lon_sw), max(lon_ne, lon_sw), step)
     coords = [x for x in itertools.product(lats, lons)]
@@ -74,8 +90,16 @@ def split_area(lat_ne, lat_sw, lon_ne, lon_sw, token, step):
     return params_list
 
 
-# Get content from Netatmo with getpublicdata
+
 def get_data_getpublicdata(adress, params, current_log):
+    """ Obtain meteodata from Netatmo stations via Netatmo API function getpublicdata
+    Arguments:
+    adress -- http link to request data via Netatmo API function getpublicdata.
+              The value must be set in the file ...Configurations/project_configuration.txt
+    params -- the set of parameters which are required to request data via Netatmo API function getpublicdata
+    current_log -- path to the file with project_log_year_month.txt.
+                   The file crates automatically and contains data about loading process
+    """
     req_count = 0
     iteration = 1
     while iteration <= 3:
@@ -117,8 +141,14 @@ def get_data_getpublicdata(adress, params, current_log):
 
 # Processing content derived with getpublicdata
 
-#  Get list of stations
 def get_list_of_current_stations(text):
+    """ This functions allows to know all active stations at the moment of the request.
+    Returns the list of stations which are active at the moment. There are derived coordinates, height, mac-adress of each module for each station
+    Besides it makes a list of the statins which have extra modules for detecting wind parameters, precipitation etc
+    
+    Arguments:
+     text -- the response from Netatmo
+    """
     cur_stations_list = []
     aux_station_list = []
     for item in text:
@@ -151,6 +181,16 @@ def get_list_of_current_stations(text):
 
 
 def update_stations_list(cur_stations_list, arch_stations_file):
+    """ This function compares the newly came data with existing catalogue of netatmo stations and adds the new ones.
+    If there is no catalogue yet, the function will create it.
+    
+    Arguments:
+    cur_stations_list -- the list of Netatmo stations, which the script found at the moment 
+    arch_stations_file - path to the catalogue of Netatmo stations in this project.
+    The file creates automatically in this script.
+        The name of the file must be set in the file ...Configurations/project_configuration.txt
+        And the path to it depends on the project settings in ...Configurations/project_configuration.txt
+    """
     cur_df = pd.DataFrame(cur_stations_list)
 
     if cur_df.shape != (0, 0):
@@ -182,6 +222,12 @@ def update_stations_list(cur_stations_list, arch_stations_file):
 
 # Get meteodata with getpublicdata
 def get_publicdata(response_body):
+    """This function parses the response from Netatmo and makes list of dictionaries.
+    Each dictionary contains current meteodata from one meteo station
+    
+    Arguments:
+    response_body -- the response from Netatmo
+    """
     parcels_list = []
     for item in response_body:
         parcel = {'station_mac': item['_id']}
@@ -199,6 +245,11 @@ def get_publicdata(response_body):
 
 
 def make_folder(path, folder_name):
+    """ Technical function to create folders to manage data of the project
+    Arguments:
+    path -- path where to create folder
+    folder_name -- the nale of the folder to be created
+    """
     if os.path.exists(path+'/'+folder_name):
         return path+'/'+folder_name
     else:
@@ -207,6 +258,17 @@ def make_folder(path, folder_name):
 
 
 def get_monthyear(parcel, folder):
+    """Technical function to detect the month and the year of coming meteodata.
+        This function is used to define where to store the coming meteodata.
+        If there appeares a new month or new year the essential folders will be created
+        For example temperature can be measured at 00-01 AM 1st Nov  and pressure at 23-59PM 31 Oct.
+        In this case the function will choose the 1st Nov as the greater value.
+        The response from this station will be stored in the folder with November data.
+        
+        Arguments
+        parcel -- information from one station
+        folder -- folder name where projects data stores
+    """
     month_list = []
     year_list = []
     for k in parcel.keys():
@@ -221,6 +283,12 @@ def get_monthyear(parcel, folder):
 
 
 def save_meteodata(parcels_list, datafolder):
+    """This function finds the file with of needed station in correct folder and appends new data
+    
+    Arguments:
+    parcels_list -- list dictionaries, data prepared to be stored in the appropriate folder
+    datafolder -- folder to store data
+    """
     for item in parcels_list:
         month_folder, year_folder = get_monthyear(item, datafolder)
         if item['station_mac'].replace(':', '_')+'.csv' in os.listdir(month_folder):
@@ -234,6 +302,11 @@ def save_meteodata(parcels_list, datafolder):
 
 
 def remove_duplicates(datafolder):
+    """This function looks through csv files with meteodata and removes duplicates
+    
+    Arguments:
+    datafolder - folder where stores meteodata. Each file is devoted to 1 station.
+    """
     for item in os.listdir(datafolder):
         filename = os.path.join(datafolder, item).replace("\\","/")
         df = pd.read_csv(filename)
@@ -242,12 +315,25 @@ def remove_duplicates(datafolder):
         df = None
 
 def read_configuration(path2file):
+    """Technical function which reads file ...Configurations/project_configuration.txt
+     and makes the contents suitable for processing in the script
+    
+    Arguments:
+    path2file -- path to file ...Configurations/project_configuration.txt
+    """
     with open(path2file) as f:
         init_data = json.load(f)
     return init_data
 
 
 def read_all_configs(path2folder):
+    """Technical function which looks through the folder .../Configuration and makes the list from all suitable files
+    This function is actual when user is working on several projects and is interested in several areas.
+    It will allow him to avoid making several tasks in Windows. All areas from different project_configuration.txt will be processed one by one
+    
+    Arguments:
+    path2folder -- path folder .../Configuration where must be files project_configuration.txt
+    """                                      
     config_list = []
     for item in os.listdir(path2folder):
         if item.find('_configuration') != -1:
@@ -258,6 +344,11 @@ def read_all_configs(path2folder):
 
 
 def count_stations(list_of_stations):
+    """Technical function to culculate the number of active meteostations. It is used to write data in the logfile
+    
+    Arguments:
+    list_of_stations -- list of stations processed in this session
+    """
     list_of_ids = []
     for item in list_of_stations:
         list_of_ids.append(item['station_mac'])
@@ -266,6 +357,14 @@ def count_stations(list_of_stations):
 
 
 def process_territory(config_file):
+    """The function which unites all parts of work: 1) reading initail configuration from project_configuration.txt;
+    2) creating the required folders: 3) getting token; 3) sending requests to Netatmo and processing responces;
+    4) uppending new stations to catalogue and new data to stations csv-files; 5) logging
+    This function uses all above finctions
+    
+    Arguments:
+    config_file -- file with configurations from list made by read_all_configs
+    """
     configs = read_configuration(config_file)
     projectfolder = make_folder(configs['netatmo_folder'], configs['input_data']['project_name'])
     datafolder = make_folder(projectfolder, 'NetatmoData')
@@ -331,6 +430,12 @@ def process_territory(config_file):
 
 
 def run_all(config_folder):
+    """Function which looks into folder with configuration files.
+    It makes list from them and then loops through it to process all required territories
+    
+    Arguments:
+    config_folder -- path to folder .../Configuration
+    """
     list2process = read_all_configs(config_folder)
     for item in list2process:
         try:
