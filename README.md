@@ -1,5 +1,14 @@
+
 # LoadNetatmoData
 ## README
+
+- [Scope of the script](#scope-of-the-script)
+- [How it works](#how-it-works)
+- [Installation](#installation)
+- [Settings for each project](#settings-for-each-project)
+- [Recommended usage](#recommended-usage)
+- [Limitations](#limitations)
+- [Credits](#credits)
 
 ### Scope of the script
 This script helps user set the coordinates and to obtain meteorological data from Netatmo meteostations and to make a catalogue of Netatmo meteostations within the mentioned area.
@@ -30,7 +39,7 @@ string#450 config_folder = ""  # input the path to folder Configuration
 Here you should input the path to folder _/Configuration_ with file(s) _Territory_configuration.txt_, as it is said in the comment.
 Then save the changes and launch the script!
 
-### Settings for each project:
+### Settings for each project
 There is a description of initial parameters below. Generally, it is a dictionary.
 Mind that each value must be __str__ type, even coordinates. So, each value must be quoted like this “34.8”.
 Don’t change the keys, only values.
@@ -55,10 +64,10 @@ Data which you will obtain after registration on https://dev.netatmo.com/. You s
 #### Block "aux_station_file_name"
 * the name of the catalogue of Netatmo meteostations which have additional modules. Just name, don’t place the path here, it will be formed automatically
 
-### Recommended usage.
+### Recommended usage
 When we worked on the script, we decided that the script must be suitable to use in the sever side. It is devoted to automatically collection of data. We recommend to place it on server and launch via Task Manager. That is the reason why we use _pyw_ format of Python file instead of _py_. Pyw works without opening console window!
 
-### Limitations.
+### Limitations
 Please investigate restrictions from Netatmo. There exist limits on data access. If you exceed them, you will be banned!
 If you collect data for a certain period it will take much space on the disk!
 
