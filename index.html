@@ -1,0 +1,478 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>README</title><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
+html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
+iframe { margin: auto; }
+a.url { word-break: break-all; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
+#write.first-line-indent p { text-indent: 2em; }
+#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
+#write.first-line-indent li { margin-left: 2em; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
+.typora-export .task-list-item input { pointer-events: none; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  #write { padding-left: 20px; padding-right: 20px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+#write li > figure:last-child { margin-bottom: 0.5rem; }
+#write ol, #write ul { position: relative; }
+img { max-width: 100%; vertical-align: middle; image-orientation: from-image; }
+button, input, select, textarea { color: inherit; font: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+*, ::after, ::before { box-sizing: border-box; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
+#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
+p { line-height: inherit; }
+h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 4; }
+p { orphans: 4; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
+a { cursor: pointer; }
+sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
+sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
+figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
+figure > table { margin: 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 32px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror-linenumber { user-select: none; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+#write pre { white-space: pre-wrap; }
+#write.fences-no-line-wrapping pre { white-space: pre; }
+#write pre.ty-contain-cm { white-space: normal; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+#write .md-fences.mock-cm { white-space: pre-wrap; }
+.md-fences.md-fences-with-lineno { padding-left: 0px; }
+#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
+.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
+.CodeMirror-line, twitterwidget { break-inside: avoid; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
+.footnotes + .footnotes { margin-top: 0px; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li .mathjax-block, li p { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child, li > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
+#write .footnote-line { white-space: pre-wrap; }
+@media print {
+  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; font-variant-ligatures: no-common-ligatures; }
+  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { break-after: avoid; }
+  .typora-export #write::after { height: 0px; }
+  .is-mac table { break-inside: avoid; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
+#write.first-line-indent p > .md-image:only-child:not(.md-img-error) img { left: -2em; position: relative; }
+p > .md-image:only-child { display: inline-block; width: 100%; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.md-math-block { width: 100%; }
+.md-math-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus, [contenteditable="false"]:active, [contenteditable="false"]:focus { outline: 0px; box-shadow: none; }
+.md-task-list-item { position: relative; list-style-type: none; }
+.task-list-item.md-task-list-item { padding-left: 0px; }
+.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc-content::after, .md-toc::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); }
+.md-toc-item a { text-decoration: none; }
+.md-toc-inner:hover { text-decoration: underline; }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+code, pre, samp, tt { font-family: var(--monospace); }
+kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
+code { text-align: left; vertical-align: initial; }
+a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
+.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none 0s ease 0s; }
+.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
+.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
+.md-diagram-panel > svg { max-width: 100%; }
+[lang="flow"] svg, [lang="mermaid"] svg { max-width: 100%; height: auto; }
+[lang="mermaid"] .node text { font-size: 1rem; }
+table tr th { border-bottom: 0px; }
+video { max-width: 100%; display: block; margin: 0px auto; }
+iframe { max-width: 100%; width: 100%; border: none; }
+.highlight td, .highlight tr { border: 0px; }
+svg[id^="mermaidChart"] { line-height: 1em; }
+mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
+.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
+mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+@media print {
+  .typora-export h1, .typora-export h2, .typora-export h3, .typora-export h4, .typora-export h5, .typora-export h6 { break-inside: avoid; }
+}
+
+
+html {
+	font-size: 19px;
+}
+
+html, body {
+	margin: auto;
+	background: #fefefe;
+}
+body {
+	font-family: "Vollkorn", Palatino, Times;
+	color: #333;
+	line-height: 1.4;
+	text-align: justify;
+}
+
+#write {
+	max-width: 960px;
+	margin: 0 auto;
+	margin-bottom: 2em;
+	line-height: 1.53;
+	padding-top: 40px;
+}
+
+@media only screen and (min-width: 1400px) {
+	#write {
+		max-width: 1100px;
+	}
+}
+
+/* Typography
+-------------------------------------------------------- */
+
+#write>h1:first-child,
+h1 {
+	margin-top: 1.6em;
+	font-weight: normal;
+}
+
+h1 {
+	font-size:3em;
+}
+
+h2 {
+	margin-top:2em;
+	font-weight: normal;
+}
+
+h3 {
+	font-weight: normal;
+	font-style: italic;
+	margin-top: 3em;
+}
+
+h1, 
+h2, 
+h3{
+	text-align: center;
+}
+
+h2:after{
+	border-bottom: 1px solid #2f2f2f;
+    content: '';
+    width: 100px;
+    display: block;
+    margin: 0 auto;
+    height: 1px;
+}
+
+h1+h2, h2+h3 {
+	margin-top: 0.83em;
+}
+
+p,
+.mathjax-block {
+	margin-top: 0;
+	-webkit-hypens: auto;
+	-moz-hypens: auto;
+	hyphens: auto;
+}
+ul {
+	list-style: square;
+	padding-left: 1.2em;
+}
+ol {
+	padding-left: 1.2em;
+}
+blockquote {
+	margin-left: 1em;
+	padding-left: 1em;
+	border-left: 1px solid #ddd;
+}
+code,
+pre {
+	font-family: "Consolas", "Menlo", "Monaco", monospace, serif;
+	font-size: .9em;
+	background: white;
+}
+.md-fences{
+	margin-left: 1em;
+	padding-left: 1em;
+	border: 1px solid #ddd;
+	padding-bottom: 8px;
+	padding-top: 6px;
+	margin-bottom: 1.5em;
+}
+
+a {
+	color: #2484c1;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+a img {
+	border: none;
+}
+h1 a,
+h1 a:hover {
+	color: #333;
+	text-decoration: none;
+}
+hr {
+	color: #ddd;
+	height: 1px;
+	margin: 2em 0;
+	border-top: solid 1px #ddd;
+	border-bottom: none;
+	border-left: 0;
+	border-right: 0;
+}
+.ty-table-edit {
+	background: #ededed;
+    padding-top: 4px;
+}
+table {
+	margin-bottom: 1.333333rem
+}
+table th,
+table td {
+	padding: 8px;
+	line-height: 1.333333rem;
+	vertical-align: top;
+	border-top: 1px solid #ddd
+}
+table th {
+	font-weight: bold
+}
+table thead th {
+	vertical-align: bottom
+}
+table caption+thead tr:first-child th,
+table caption+thead tr:first-child td,
+table colgroup+thead tr:first-child th,
+table colgroup+thead tr:first-child td,
+table thead:first-child tr:first-child th,
+table thead:first-child tr:first-child td {
+	border-top: 0
+}
+table tbody+tbody {
+	border-top: 2px solid #ddd
+}
+
+.task-list{
+	padding:0;
+}
+
+.md-task-list-item {
+	padding-left: 1.6rem;
+}
+
+.md-task-list-item > input:before {
+	content: '\221A';
+	display: inline-block;
+	width: 1.33333333rem;
+  	height: 1.6rem;
+	vertical-align: middle;
+	text-align: center;
+	color: #ddd;
+	background-color: #fefefe;
+}
+
+.md-task-list-item > input:checked:before,
+.md-task-list-item > input[checked]:before{
+	color: inherit;
+}
+.md-tag {
+	color: inherit;
+	font: inherit;
+}
+#write pre.md-meta-block {
+	min-height: 35px;
+	padding: 0.5em 1em;
+}
+#write pre.md-meta-block {
+	white-space: pre;
+	background: #f8f8f8;
+	border: 0px;
+	color: #999;
+	
+	width: 100vw;
+	max-width: calc(100% + 60px);
+	margin-left: -30px;
+	border-left: 30px #f8f8f8 solid;
+	border-right: 30px #f8f8f8 solid;
+
+	margin-bottom: 2em;
+	margin-top: -1.3333333333333rem;
+	padding-top: 26px;
+	padding-bottom: 10px;
+	line-height: 1.8em;
+	font-size: 0.9em;
+	font-size: 0.76em;
+	padding-left: 0;
+}
+.md-img-error.md-image>.md-meta{
+	vertical-align: bottom;
+}
+#write>h5.md-focus:before {
+	top: 2px;
+}
+
+.md-toc {
+	margin-top: 40px;
+}
+
+.md-toc-content {
+	padding-bottom: 20px;
+}
+
+.outline-expander:before {
+	color: inherit;
+	font-size: 14px;
+	top: auto;
+	content: "\f0da";
+	font-family: FontAwesome;
+}
+
+.outline-expander:hover:before,
+.outline-item-open>.outline-item>.outline-expander:before {
+  	content: "\f0d7";
+}
+
+/** source code mode */
+#typora-source {
+	font-family: Courier, monospace;
+    color: #6A6A6A;
+}
+
+.html-for-mac #typora-sidebar {
+    -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+}
+
+.cm-s-typora-default .cm-header, 
+.cm-s-typora-default .cm-property,
+.CodeMirror.cm-s-typora-default div.CodeMirror-cursor {
+	color: #428bca;
+}
+
+.cm-s-typora-default .cm-atom, .cm-s-typora-default .cm-number {
+	color: #777777;
+}
+
+.typora-node .file-list-item-parent-loc, 
+.typora-node .file-list-item-time, 
+.typora-node .file-list-item-summary {
+	font-family: arial, sans-serif;
+}
+
+.md-task-list-item>input {
+    margin-left: -1.3em;
+    margin-top: calc(1rem - 12px);
+}
+
+.md-mathjax-midline {
+	background: #fafafa;
+}
+
+.md-fences .code-tooltip {
+	bottom: -2em !important;
+}
+
+.dropdown-menu .divider {
+	border-color: #e5e5e5;
+}
+
+
+</style>
+</head>
+<body class='typora-export os-windows'>
+<div id='write'  class=''><h1><a name="loadnetatmodata" class="md-header-anchor"></a><span>LoadNetatmoData</span></h1><h2><a name="readme" class="md-header-anchor"></a><span>README</span></h2><ul><li><a href='#scope-of-the-script'><span>Scope of the script</span></a></li><li><a href='#how-it-works'><span>How it works</span></a></li><li><a href='#installation'><span>Installation</span></a></li><li><a href='#settings-for-each-project'><span>Settings for each project</span></a></li><li><a href='#recommended-usage'><span>Recommended usage</span></a></li><li><a href='#limitations'><span>Limitations</span></a></li><li><a href='#credits'><span>Credits</span></a></li><li><a href='#license'><span>License</span></a></li></ul><h3><a name="scope-of-the-script" class="md-header-anchor"></a><span>Scope of the script</span></h3><p><span>This script helps user set the coordinates and to obtain meteorological data from Netatmo meteostations and to make a catalogue of Netatmo meteostations within the mentioned area.</span>
+<span>The coming data for each station contains temperature, pressure, humidity at the moment of request. We recommend our script for monitoring tasks</span></p><h3><a name="how-it-works" class="md-header-anchor"></a><span>How it works</span></h3><p><span>There is Netatmo API, which is free to use after registration on </span><a href='https://dev.netatmo.com/' target='_blank' class='url'>https://dev.netatmo.com/</a>
+<span>After registration you will get client_ID and client_secret.</span>
+<span>Netatmo API has several methods and getpublicdata is among them. This method allows to obtain information from all meteostations within the rectangle.</span>
+<span>This method requires the following mandatory arguments: the coordinates of northeast and southwest corners of your area in degrees.</span>
+<span>All required data can be added to the file </span><em><span>Configurations/Territory_configuration.txt</span></em><span>. You can find a template in this repository.</span>
+<span>There is a dictionary in this file and you must enter your data here.</span>
+<span>This file will be processed by script automatically and you have no need to make changes in the script.</span>
+<span>If you need to get data for several areas, you can create several files </span><em><span>Configurations/Territory_configuration.txt</span></em><span> with appropriate data in them.</span>
+<span>The script will gather data on the basis of this files after launching.</span>
+<span>Our script makes requests to Netatmo server and the response contains information within the mentioned plot. The response is a json file and our script extracts meteorological information from json. The derived data stores in separate files. Each file stores data only from one meteostation.</span>
+<span>The newcoming data appends to the </span><em><span>csv file</span></em><span>. The name of csv file is unique, because it includes MAC-address of Netatmo meteostation. If the script finds new station within the area, it will create the separate file for it. Each file stores information for one station for one month of the year. So, if you want to find data, you should walk along the path: </span><em><span>project_folder -&gt; year_folder -&gt; month_folder</span></em><span>. Such a solution allows to avoid creating bulky files.</span>
+<span>Besides, there will be created and updated the </span><em><span>catalogue of meteostations in csv file</span></em><span>. One more output is </span><em><span>txt logfile</span></em><span>, which collects the detailed information about working process.</span></p><h3><a name="installation" class="md-header-anchor"></a><span>Installation</span></h3><p><span>To install our solution, you should download the script - </span><em><span>NETATMO_Reading_2.0.pyw</span></em><span> and folder </span><em><span>/Configurations</span></em><span> with template file.</span>
+<span>Place the </span><em><span>NETATMO_Reading_2.0.pyw</span></em><span> file and folder </span><em><span>/Configurations</span></em><span> in your folder.</span>
+<span>Then you need to install all required libraries. It is recommended to do it via Anaconda Prompt.</span>
+<span>The list of libraries used in the script can be found in </span><em><span>netatmo_libraries.txt</span></em><span> in current repository.</span>
+<span>You can install libraries from this file. The instruction is in the head of the file  </span><em><span>netatmo_libraries.txt</span></em><span>.</span>
+<span>Finally, you should open the file </span><em><span>NETATMO_Reading_2.0.pyw</span></em><span> and check</span>
+<span>string#450 config_folder = &quot;&quot;  # input the path to folder Configuration</span>
+<span>Here you should input the path to folder </span><em><span>/Configuration</span></em><span> with file(s) </span><em><span>Territory_configuration.txt</span></em><span>, as it is said in the comment.</span>
+<span>Then save the changes and launch the script!</span></p><h3><a name="settings-for-each-project" class="md-header-anchor"></a><span>Settings for each project</span></h3><p><span>There is a description of initial parameters below. Generally, it is a dictionary.</span>
+<span>Mind that each value must be </span><strong><span>str</span></strong><span> type, even coordinates. So, each value must be quoted like this “34.8”.</span>
+<span>Don’t change the keys, only values.</span>
+<span>Please be careful with coordinates and step. If you set a wide area or very small step, you may be possibly banned by Netatmo due to exceeding the allowed number of requests.</span></p><h4><a name="block-inputdata" class="md-header-anchor"></a><span>Block input_data</span></h4><p><span>Data to define the parameters of search</span></p><ul><li><span>&quot;project_name&quot;:  - the parameter will affect the name of the folder for collecting data</span></li><li><span>&quot;lat_ne&quot;, &quot;lon_ne&quot;, &quot;lat_sw&quot;, &quot;lon_sw&quot; - coordinates of corners in decimal degrees. Lat means latitude, lon - longitude, n - north, s - south, e - east, w - west</span></li><li><span>&quot;step&quot;: &quot;0.07&quot; - determines the size of parsing area. The value 0.07 means that the requested area will be divided into small rectangles 0.07×0.07 degrees.</span></li></ul><h4><a name="block-payload" class="md-header-anchor"></a><span>Block &quot;payload&quot;</span></h4><p><span>Data which you will obtain after registration on </span><a href='https://dev.netatmo.com/' target='_blank' class='url'>https://dev.netatmo.com/</a><span>. You should place information into appropriate place instead of &quot;please input your data&quot; The data is needed to get access to Netatmo information.</span></p><ul><li><span>&quot;client_id&quot;, &quot;client_secret&quot;, &quot;grant_type&quot;, &quot;username&quot;, &quot;password&quot;, &quot;scope&quot;: &quot;read_station&quot;.</span></li></ul><h4><a name="block-adr" class="md-header-anchor"></a><span>Block &quot;adr&quot;</span></h4><ul><li><span>&quot;</span><a href='https://api.netatmo.com/oauth2/token' target='_blank' class='url'>https://api.netatmo.com/oauth2/token</a><span>&quot;, - web path to get token. Don’t change it without any need.</span></li></ul><h4><a name="block-adrgetpublicdata" class="md-header-anchor"></a><span>Block &quot;adr_getpublicdata&quot;</span></h4><ul><li><a href='https://api.netatmo.com/api/getpublicdata' target='_blank' class='url'>https://api.netatmo.com/api/getpublicdata</a><span> - Netatmo api function. Don’t change it without any need</span></li></ul><h4><a name="block-netatmofolder" class="md-header-anchor"></a><span>Block &quot;netatmo_folder&quot;</span></h4><ul><li><span>absolute path to the folder where is located the script and folder Configurations. Please use </span><strong><span>/</span></strong><span> instead of \</span></li></ul><h4><a name="block-stationfilename" class="md-header-anchor"></a><span>Block &quot;station_file_name&quot;</span></h4><ul><li><span>the name of the main catalogue of Netatmo meteostations. Just name, don’t place the path here, it will be formed automatically</span></li></ul><h4><a name="block-auxstationfilename" class="md-header-anchor"></a><span>Block &quot;aux_station_file_name&quot;</span></h4><ul><li><span>the name of the catalogue of Netatmo meteostations which have additional modules. Just name, don’t place the path here, it will be formed automatically</span></li></ul><h3><a name="recommended-usage" class="md-header-anchor"></a><span>Recommended usage</span></h3><p><span>When we worked on the script, we decided that the script must be suitable to use in the sever side. It is devoted to automatically collection of data. We recommend to place it on server and launch via Task Manager. That is the reason why we use </span><em><span>pyw</span></em><span> format of Python file instead of </span><em><span>py</span></em><span>. Pyw works without opening console window!</span></p><h3><a name="limitations" class="md-header-anchor"></a><span>Limitations</span></h3><p><span>Please investigate restrictions from Netatmo. There exist limits on data access. If you exceed them, you will be banned!</span>
+<span>If you collect data for a certain period it will take much space on the disk!</span></p><h3><a name="credits" class="md-header-anchor"></a><span>Credits</span></h3><p><span>The results here are the part of the </span><strong><span>project funded by RFBR, project number 19-35-70009</span></strong></p><h4><a name="working-group" class="md-header-anchor"></a><span>Working group:</span></h4><ul><li><span>Pavel Kargashin</span></li><li><span>Mikhail Varentsov</span></li><li><span>Timofey Samsonov</span></li><li><span>Pavel Konstantinov</span></li><li><span>Polina Korosteleve</span></li></ul><h3><a name="license" class="md-header-anchor"></a><span>License</span></h3><p><span>The project is under MIT license</span></p></div>
+</body>
+</html>
