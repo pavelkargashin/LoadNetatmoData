@@ -192,28 +192,26 @@ def update_stations_list(cur_stations_list, arch_stations_file):
         And the path to it depends on the project settings in ...Configurations/project_configuration.txt
     """
     cur_df = pd.DataFrame(cur_stations_list)
+    cur_df[['longitude', 'latitude']] = cur_df[['longitude', 'latitude']].astype(str)
 
     if cur_df.shape != (0, 0):
         cur_df.drop_duplicates(subset=['station_mac'], inplace=True)
         try:
-            arch_df = pd.read_csv(arch_stations_file)
+            arch_df = pd.read_csv(arch_stations_file, converters={'latitude': str, 'longitude': str})
         except:
             cur_df.to_csv(arch_stations_file, index=False)
-            arch_df = pd.read_csv(arch_stations_file)
+            arch_df = pd.read_csv(arch_stations_file, converters={'latitude': str, 'longitude': str})
 
-        temp_df = arch_df.merge(cur_df, how='outer', on=['station_mac'], suffixes=['_arch', '_cur'], indicator=True)
-        new_data = temp_df.query("_merge=='right_only'").copy()
-        similar_data = temp_df.query("_merge=='both'").copy()
-        changed_data = similar_data.query("abs(latitude_arch-latitude_cur)>0.00001 or 
-                                           abs(longitude_arch-longitude_cur)>0.00001 or 
-                                           altitude_arch!=altitude_cur").copy()
-        data2append = pd.concat([new_data, changed_data]).copy()
+        newcome_data = pd.merge(left=arch_df, right=cur_df, how='right',
+                                on=['station_mac', 'latitude', 'longitude'], suffixes=['_arch', '_cur'], indicator=True)
+        data2append = newcome_data.query("_merge=='right_only'").sort_values(by='station_mac').dropna(axis=1).drop(
+            labels='_merge', axis=1)
         if data2append.shape[0] == 0:
             return "There are no new stations in the search area", 0
         else:
-            data2append.drop(labels = [x for x in data2append.columns.tolist() if (x[-4:] == 'arch' or x == '_merge')], axis=1, inplace=True)
-            cols_order = [x for x in data2append.columns.tolist() if x != 'station_mac'] + ["station_mac"]
-            data2append = data2append[cols_order]
+            order = data2append.columns.tolist()
+            order.sort()
+            data2append = data2append[order]
             data2append.to_csv(path_or_buf=arch_stations_file, mode='a', header=False, index=False)
             return data2append['station_mac'].tolist(), data2append.shape[0]
     else:
