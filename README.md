@@ -9,6 +9,7 @@
 - [Recommended usage](#recommended-usage)
 - [Limitations](#limitations)
 - [Credits](#credits)
+- [License](#license)
 
 ### Scope of the script
 This script helps user set the coordinates and to obtain meteorological data from Netatmo meteostations and to make a catalogue of Netatmo meteostations within the mentioned area.
