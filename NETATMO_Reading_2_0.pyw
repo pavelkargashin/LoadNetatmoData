@@ -135,6 +135,7 @@ def get_data_getpublicdata(adress, params, current_log):
                             current_log, "Cannot get public data. The error is {}".format(my_data)
             )
             continue
+
     result = ['server error']
     return result, req_count
 
@@ -382,31 +383,36 @@ def process_territory(config_file):
         list_total_stations = []
         counter = 0  # Number of requests
         for item in search_areas:
-            cur_data, counter1 = get_data_getpublicdata(configs['adr_getpublicdata'], item, current_log)
-            counter += counter1
-            logging_process(current_log, "The area {} has {} stations".format(str(search_areas.index(item)), str(len(cur_data))))
-            if (cur_data is not None) and (len(cur_data) != 0) and (cur_data[0] != 'server error'):
-                cur_station_list, aux_cur_station_list = get_list_of_current_stations(cur_data)
-                list_total_stations += cur_station_list
-                list_of_new_stations, count_new_stations = update_stations_list(cur_station_list, station_file)
-                num_new_stations += count_new_stations
-                try:
-                    update_stations_list(aux_cur_station_list, aux_station_file)
-                    logging_process(current_log, "The new stations: " + str(list_of_new_stations))
-                except:
-                    logging_process(current_log, "Error in function update stations for aux stations")
-                try:
-                    parcels_list = get_publicdata(cur_data)
-                except:
-                    logging_process(current_log, "error in function get_publicdata")
-                logging_process(current_log, "stations list updated")
-                try:
-                    current_folder = save_meteodata(parcels_list, datafolder)
-                except:
-                    logging_process(current_log, "error in function save_meteodata")
-            else:
-                time.sleep(1)
+            try:
+                cur_data, counter1 = get_data_getpublicdata(configs['adr_getpublicdata'], item, current_log)
+                counter += counter1
+                logging_process(current_log, "The area {} has {} stations".format(str(search_areas.index(item)), str(len(cur_data))))
+                if (cur_data is not None) and (len(cur_data) != 0) and (cur_data[0] != 'server error'):
+                    cur_station_list, aux_cur_station_list = get_list_of_current_stations(cur_data)
+                    list_total_stations += cur_station_list
+                    list_of_new_stations, count_new_stations = update_stations_list(cur_station_list, station_file)
+                    num_new_stations += count_new_stations
+                    try:
+                        update_stations_list(aux_cur_station_list, aux_station_file)
+                        logging_process(current_log, "The new stations: " + str(list_of_new_stations))
+                    except:
+                        logging_process(current_log, "Error in function update stations for aux stations")
+                    try:
+                        parcels_list = get_publicdata(cur_data)
+                    except:
+                        logging_process(current_log, "error in function get_publicdata")
+                    logging_process(current_log, "stations list updated")
+                    try:
+                        current_folder = save_meteodata(parcels_list, datafolder)
+                    except:
+                        logging_process(current_log, "error in function save_meteodata")
+                else:
+                    time.sleep(1)
+                    continue
+            except:
+                logging_process(current_log, "Could not process the area")
                 continue
+
     except:
         logging_process(current_log, "Failed to make an update")
         pass
